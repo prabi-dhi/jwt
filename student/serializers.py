@@ -7,12 +7,12 @@ class StudentSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True) 
     email = serializers.CharField(write_only = True)
     user_name = serializers.ReadOnlyField(source='user.username') 
-    email = serializers.ReadOnlyField(source = 'user.email')
+    user_email = serializers.ReadOnlyField(source = 'user.email')
     # users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many = True, required = False) 
 
     class Meta:
         model = Student
-        fields = ['id', 'student_name', 'username', 'password', 'email','user_name','email']
+        fields = ['id', 'student_name', 'username', 'password', 'email','user_name','user_email']
 
     def create(self, validated_data):
         username = validated_data.get('username')
