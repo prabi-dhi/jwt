@@ -11,16 +11,17 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
-        fields = ['id', 'teacher_name','username', 'password', 'email','user_name','user_email']
+        fields = ['id', 'teacher_name','class_assigned','username', 'password', 'email','user_name','user_email']
 
     def create(self, validated_data):
         username = validated_data.get('username')
         password = validated_data.get('password')
         email = validated_data.get('email')
         teacher_name = validated_data.get('teacher_name')
+        class_assigned = validated_data.get('class_assigned')
 
         user = User.objects.create(username=username, password=password, email = email, user_type = 'TEACHER')
-        teacher = Teacher.objects.create(teacher_name = teacher_name, user = user)
+        teacher = Teacher.objects.create(teacher_name = teacher_name, class_assigned = class_assigned, user = user)
         return teacher
 
         
