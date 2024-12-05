@@ -7,26 +7,22 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .permissions import IsUserOrReadOnly
+from user.models import User
+from user.serializers import UserSerializer
 
-# class StudentList(generics.ListCreateAPIView):
-#     queryset = Student.objects.all()
-#     serializer_class = StudentSerializer
-#     permission_classes = [IsAuthenticated]
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)
 class StudentListGetApi(APIView):
     def get(self, request):
         student = Student.objects.all()
         serializer = StudentSerializer(student, many= True)
         return Response(serializer.data)
-
+    
 class StudentAddApi(APIView):
     permission_classes=[IsAuthenticated]
     def post(self, request):
         serializer = StudentSerializer(data = request.data)
         if serializer.is_valid():
-            serializer.save(created_by = self.request.user)
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
+                serializer.save()
+                return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class StudentDetailGetApi(APIView):

@@ -3,8 +3,9 @@ from user.models import User
 
 class Student(models.Model):
     student_name = models.CharField(max_length = 50)
-    created_by = models.ForeignKey(User, on_delete = models.SET_NULL, null= True, blank =True, related_name='students')
+    # user_name = models.ForeignKey(User, on_delete = models.SET_NULL, null= True, blank =True, related_name='students')
     is_deleted = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null= True, blank =True)
 
     class Meta:
         db_table = 'STUDENT'
