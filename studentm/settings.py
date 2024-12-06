@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'student',
     'classroom',
     'teacher',
+    'subject',
     'rest_framework',
     'rest_framework_simplejwt',
 ]

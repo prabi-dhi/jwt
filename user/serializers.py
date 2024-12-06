@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
         password = validated_data.get('password')
         email = validated_data.get('email')
         user_type = validated_data.get('user_type')
+
         user = User.objects.create(username=username, password=password, email = email, user_type = user_type)
         if user.user_type == 'STUDENT':
             Student.objects.create(user=user, student_name = username)

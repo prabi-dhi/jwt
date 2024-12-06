@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAuthenticatedAdministration
 from django.shortcuts import get_object_or_404
 
 class ClassroomListGetApi(APIView):
@@ -13,7 +14,7 @@ class ClassroomListGetApi(APIView):
         return Response(serializer.data)
 
 class ClassroomAddApi(APIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsAuthenticatedAdministration]
     def post(self, request):
         serializer = ClassroomSerializer(data = request.data)
         if serializer.is_valid():
@@ -28,7 +29,7 @@ class ClassroomDetailGetApi(APIView):
         return Response(serializer.data)
 
 class ClassroomDetailUpdateApi(APIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsAuthenticatedAdministration]
     def put(self, request, pk):
         classroom = get_object_or_404(Classroom, pk=pk)
         serializer = ClassroomSerializer(classroom, data=request.data)
@@ -38,7 +39,7 @@ class ClassroomDetailUpdateApi(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ClassroomDetailDeleteApi(APIView):
-    permission_classes= [IsAuthenticated]
+    permission_classes= [IsAuthenticatedAdministration]
     def delete(self, request, pk):
         classroom = get_object_or_404(Classroom, pk = pk)
         classroom.is_deleted = True

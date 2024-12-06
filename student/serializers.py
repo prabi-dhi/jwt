@@ -12,7 +12,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'student_name', 'username', 'password', 'email','user_name','user_email']
+        fields = ['id', 'student_name','class_enrolled', 'username', 'password', 'email','user_name','user_email']
 
     def create(self, validated_data):
         username = validated_data.get('username')
