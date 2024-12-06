@@ -6,9 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from .permissions import IsUserOrReadOnly
-from user.models import User
-from user.serializers import UserSerializer
 
 class StudentListGetApi(APIView):
     def get(self, request):
@@ -35,10 +32,10 @@ class StudentDetailGetApi(APIView):
             return Response({"detail":"Student not found"}, status= status.HTTP_404_NOT_FOUND)
 
 class StudentDetailUpdateApi(APIView):
-    permission_classes=[IsAuthenticated, IsUserOrReadOnly]
-    def put(self, request, pk):
+    permission_classes=[IsAuthenticated]
+    def patch(self, request, pk):
         student = get_object_or_404(Student, pk = pk)
-        serializer= StudentSerializer(student, data= request.data)
+        serializer= StudentSerializer(student, data= request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

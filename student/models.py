@@ -7,6 +7,7 @@ class Student(models.Model):
     class_enrolled = models.ForeignKey(Classroom, on_delete=models.CASCADE, null= True, blank = True)
     is_deleted = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete = models.SET_NULL, null= True, blank =True)
+    
     class Meta:
         db_table = 'STUDENT'
     def __str__(self):
